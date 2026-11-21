@@ -1,11 +1,11 @@
 export function init(){
     console.log("Initializing...");
     const body=document.getElementById("body");
-    body.innerHTML="<input type='password' id='password' placeholder='Enter Password'/><button id='submit'>Submit</button>";
+    body.innerHTML="<input type='password' id='password' placeholder='Enter Password(hint: its not password123)'/><button id='submit'>Submit</button>";
     const passwordInput=document.getElementById("password");
     const submitButton=document.getElementById("submit");
     submitButton.addEventListener("click",async()=>{submit();});
-    document.addEventListener("keydown",async(event)=>{if(event.key==="Enter"){submit();}});
+    passwordInput.addEventListener("keydown",async(event)=>{if(event.key==="Enter"){submit();}});
     async function submit(){
         const password=passwordInput.value;
         if(password===""){
