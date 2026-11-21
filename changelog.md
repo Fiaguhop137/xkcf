@@ -16,3 +16,4 @@
  - 1f89a-2026.11.21-11.21.30-0500: removed testing script(obselete)
  - 1f89a-2026.11.21-13.15.22-0500: added image support
  - 1f89a-2026.11.21-13.25.25-0500: fixed avifs
+ - 1f89a-2026.11.21-13.51.11-0500: changed to b64 strings because i dont wanna pay

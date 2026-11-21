@@ -60,7 +60,7 @@ async function post(){
     };
     const imageInput=document.getElementById("image");
     let image=null;
-    try{if(imageInput.files.length>0){image=await firebase.uploadImage(imageInput.files[0]);};}
+    try{if(imageInput.files.length>0){image=await firebase.imageToBase64(imageInput.files[0]);};}
     catch(error){
         console.error("Image upload failed:",error);
         alert(error.message);
