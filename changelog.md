@@ -19,3 +19,4 @@
  - 1f89a-2026.11.21-13.51.11-0500: changed to b64 strings because i dont wanna pay
  - 1f89a-2026.11.21-13.58.49-0500: squeezed a few extra bytes out
  - 1f89a-2026.11.21-14.11.00-0500: made better css
+ - 1f89a-2026.11.21-14.24.42-0500: alpenglow css(from firefox)! dont you just love internet piracy
