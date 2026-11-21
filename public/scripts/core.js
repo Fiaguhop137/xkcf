@@ -3,6 +3,7 @@ export function init(){
     console.log("Initializing...");
     const body=document.getElementById("body");
     body.innerHTML=`
+    <p>Welcome to XKCF! Please enter the password to continue. (this exists to block scrapers and as a very basic captcha)</p>
     <input type='password' id='password' placeholder='Enter Password'/>
     <p>hint: its not password123</p>
     <button id='submit'>Submit</button>
