@@ -10,3 +10,4 @@
  - 1f89a-2026.11.21-10.20.00-0500: added posts and core functions
  - 1f89a-2026.11.21-10.21.17-0500: fixed html injection vulnerability
  - 1f89a-2026.11.21-10.28.06-0500: removed obsolete utils.js
+ - 1f89a-2026.11.21-11.01.09-0500: changed from romance sarcasm etc to sarcasm language weridness and arson(yay arson)
