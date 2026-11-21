@@ -47,14 +47,14 @@ async function convertToAvif(file){
     return new Blob([encoded],{type:"image/avif"});
 };
 export async function imageToBase64(file){
-    const converted=await convertToAvif(file);
-    if(converted.size>700*1024){
-        throw new Error("Image exceeds the 700 KiB limit.");
-    };
-    return new Promise((resolve,reject)=>{
+    let converted=file;
+    if(file.type!=="image/avif"){converted=await convertToAvif(file);};
+    const b64_converted=await new Promise((resolve,reject)=>{
         const reader=new FileReader();
         reader.onload=()=>resolve(reader.result);
         reader.onerror=()=>reject(reader.error);
         reader.readAsDataURL(converted);
     });
+    if(b64_converted.length>1024*1024){throw new Error("Image exceeds the 1 MiB limit.");};
+    return b64_converted;
 };
