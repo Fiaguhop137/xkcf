@@ -20,3 +20,4 @@
  - 1f89a-2026.11.21-13.58.49-0500: squeezed a few extra bytes out
  - 1f89a-2026.11.21-14.11.00-0500: made better css
  - 1f89a-2026.11.21-14.24.42-0500: alpenglow css(from firefox)! dont you just love internet piracy
+ - 1f89a-2026.11.21-15.36.49-0500: small css changes

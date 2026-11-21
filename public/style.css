@@ -1,32 +1,34 @@
+
 :root {
     color-scheme: light;
     --background: #f9f6fb;
-    --panel: rgba(255,255,255,.82);
+    --top: #ffc999;
+    --panel: rgba(255,255,255,.85);
     --panel-solid: #fff;
     --text: #35234f;
     --muted: #786b87;
     --border: rgba(76,45,110,.16);
     --accent: #9059ff;
     --accent-hover: #7840e8;
-    --input: rgba(255,255,255,.9);
-    --shadow: 0 5px 22px rgba(73,35,100,.10);
-    --gradient: linear-gradient(100deg,#9059ff 0%,#ff4aa2 52%,#ffbd4f 100%);
-    --background-gradient: linear-gradient(180deg,#ffc999 0%,#ffeff5 180px,#f9f6fb 420px);
+    --pink: #ff4aa2;
+    --input: #fff;
+    --shadow: 0 4px 18px rgba(73,35,100,.08);
 }
 @media (prefers-color-scheme: dark) {
     :root {
         color-scheme: dark;
         --background: #20123a;
-        --panel: rgba(48,32,77,.88);
+        --top: #291d4f;
+        --panel: rgba(48,32,77,.9);
         --panel-solid: #30204d;
         --text: #fff0ff;
         --muted: #c1add7;
         --border: rgba(255,240,255,.17);
         --accent: #b58aff;
         --accent-hover: #c6a5ff;
-        --input: rgba(37,25,61,.9);
-        --shadow: 0 5px 24px rgba(0,0,0,.24);
-        --background-gradient: linear-gradient(180deg,#291d4f 0%,#20123a 260px);
+        --pink: #ff79bb;
+        --input: #25193d;
+        --shadow: 0 4px 20px rgba(0,0,0,.2);
     }
 }
 * {
@@ -40,18 +42,18 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 16px;
-    background: var(--background-gradient);
-    background-color: var(--background);
-    background-attachment: fixed;
+    background: var(--background);
+    background-image: linear-gradient(var(--top),var(--background) 220px);
+    background-repeat: no-repeat;
     color: var(--text);
-    font-family: system-ui, sans-serif;
+    font-family: system-ui,sans-serif;
 }
 h1 {
     width: min(100%,720px);
     margin: 0;
     padding: 24px;
-    border-radius: 18px;
-    background: var(--gradient);
+    border-radius: 16px;
+    background: #9059ff;
     color: white;
     font-size: clamp(1.5rem,4vw,2.2rem);
     text-align: center;
@@ -68,10 +70,10 @@ body > p {
     min-height: 200px;
     padding: 24px;
     border: 1px solid var(--border);
-    border-radius: 18px;
+    border-radius: 16px;
     background: var(--panel);
     box-shadow: var(--shadow);
-    backdrop-filter: blur(14px);
+    backdrop-filter: blur(12px);
 }
 #body > p:first-child {
     margin-top: 0;
@@ -87,7 +89,7 @@ textarea {
     margin: 6px 0 12px;
     padding: 11px 13px;
     border: 1px solid var(--border);
-    border-radius: 10px;
+    border-radius: 9px;
     outline: none;
     background: var(--input);
     color: var(--text);
@@ -100,7 +102,7 @@ textarea {
 input:focus,
 textarea:focus {
     border-color: var(--accent);
-    box-shadow: 0 0 0 3px color-mix(in srgb,var(--accent) 25%,transparent);
+    box-shadow: 0 0 0 3px color-mix(in srgb,var(--accent) 22%,transparent);
 }
 input[type="file"] {
     max-width: 100%;
@@ -111,22 +113,22 @@ button {
     margin: 4px 4px 4px 0;
     padding: 10px 18px;
     border: 0;
-    border-radius: 10px;
-    background: var(--gradient);
+    border-radius: 9px;
+    background: var(--accent);
     color: white;
     font-weight: 650;
     cursor: pointer;
-    transition: filter .15s,transform .15s;
+    transition: background .15s,transform .15s;
 }
 button:hover {
-    filter: brightness(1.08);
+    background: var(--accent-hover);
     transform: translateY(-1px);
 }
 button:active {
     transform: translateY(0);
 }
 button:focus-visible {
-    outline: 3px solid var(--accent);
+    outline: 3px solid var(--pink);
     outline-offset: 3px;
 }
 #posts {
@@ -138,7 +140,7 @@ button:focus-visible {
 .post {
     padding: 16px;
     border: 1px solid var(--border);
-    border-radius: 14px;
+    border-radius: 12px;
     background: var(--panel-solid);
     box-shadow: var(--shadow);
     overflow-wrap: anywhere;
@@ -146,9 +148,7 @@ button:focus-visible {
 .post strong {
     display: inline-block;
     margin-bottom: 8px;
-    background: var(--gradient);
-    background-clip: text;
-    color: transparent;
+    color: var(--pink);
 }
 .post img {
     display: block;
@@ -156,7 +156,7 @@ button:focus-visible {
     height: auto;
     margin: 8px 0 12px;
     border: 1px solid var(--border);
-    border-radius: 10px;
+    border-radius: 9px;
 }
 .post p {
     margin: 8px 0;
