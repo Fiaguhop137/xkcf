@@ -28,10 +28,17 @@ export function init(){
                 <input type="text" id="username" placeholder="ur name"/>
                 <p>name is optional; leave blank for anon</p>
                 <button id="postButton">Post</button>
+                <button id="refreshButton">Refresh</button>
+                <p>Posts will be displayed below:</p>
                 <div id="posts"></div>
             `;
             const postButton=document.getElementById("postButton");
+            const refreshButton=document.getElementById("refreshButton");
             postButton.addEventListener("click",post);
+            refreshButton.addEventListener("click",async()=>{
+                const page=await firebase.getReadable("posts");
+                displayPosts(page.items,page.nextCursor);
+            });
             const page=await firebase.getReadable("posts");
             displayPosts(page.items,page.nextCursor);
         };
