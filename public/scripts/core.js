@@ -84,7 +84,8 @@ export function addPost(post){
     const content=document.createElement("p");
     content.textContent=post.content;
     const timestamp=document.createElement("small");
-    timestamp.textContent=`Posted at: ${new Date(post.createdAt.seconds*1000).toLocaleString()}`;
+    const dateStr=post.createdAt?new Date(post.createdAt.seconds*1000).toLocaleString():"Just now";
+    timestamp.textContent=`Posted at: ${dateStr}`;
     postDiv.append(content,timestamp);
     postsDiv.appendChild(postDiv);
 };

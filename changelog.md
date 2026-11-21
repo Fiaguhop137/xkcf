@@ -12,3 +12,5 @@
  - 1f89a-2026.11.21-10.28.06-0500: removed obsolete utils.js
  - 1f89a-2026.11.21-11.01.09-0500: changed from romance sarcasm etc to sarcasm language weridness and arson(yay arson)
  - 1f89a-2026.11.21-11.11.07-0500: added a refresh button
+ - 1f89a-2026.11.21-11.20.12-0500: made timestamps have a just now thing
+ - 1f89a-2026.11.21-11.21.30-0500: removed testing script(obselete)
