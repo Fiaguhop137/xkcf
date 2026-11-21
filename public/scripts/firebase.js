@@ -55,6 +55,6 @@ export async function imageToBase64(file){
         reader.onerror=()=>reject(reader.error);
         reader.readAsDataURL(converted);
     });
-    if(b64_converted.length>1024*1024){throw new Error("Image exceeds the 1 MiB limit.");};
+    if(b64_converted.length>1000000){throw new Error("Image exceeds the 1 MiB limit.");};
     return b64_converted;
 };
