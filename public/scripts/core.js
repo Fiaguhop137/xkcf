@@ -49,10 +49,7 @@ export function init(){
 async function post(){
     const postInput=document.getElementById("post");
     const usernameInput=document.getElementById("username");
-    if(usernameInput.value==""){
-        usernameInput.value="Anonymous";
-    };
-    const username=usernameInput.value;
+    const username=usernameInput.value.trim()||"Anonymous";
     const content=postInput.value;
     if(content===""){
         alert("Please enter some content.");
