@@ -1,12 +1,18 @@
 import * as firebase from './firebase.js';
-import { doc,setDoc,getDoc } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore.js";
+import * as utils from './utils.js';
+import * as core from './core.js';
 const [app,analytics,database]=firebase.load();
 async function test(){
-    const reference=doc(database,"test","hello-world");
-    await setDoc(reference,{message:"hello world"});
-    console.log("Written!");
-    const snapshot=await getDoc(reference);
-    if(snapshot.exists()){console.log("Read:",snapshot.data().message);}
-    else{console.log("Document doesn't exist!");}
-}
-test().catch(console.error);
+    const id=await firebase.write("posts",{title:"Hello world",content:"My first post!",createdAt:firebase.getTimestamp()});
+    console.log("Created post:",id);
+    const result=await firebase.read("posts/"+id);
+    console.log("Read:",result);
+    const page=await firebase.getReadable("posts");
+    console.log("First page:",page.items);
+    if(page.nextCursor){
+        const next=await firebase.getReadable("posts",20,page.nextCursor);
+        console.log("Second page:",next.items);
+    }
+};
+core.init();
+// test().catch(console.error);
