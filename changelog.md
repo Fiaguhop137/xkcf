@@ -14,3 +14,4 @@
  - 1f89a-2026.11.21-11.11.07-0500: added a refresh button
  - 1f89a-2026.11.21-11.20.12-0500: made timestamps have a just now thing
  - 1f89a-2026.11.21-11.21.30-0500: removed testing script(obselete)
+ - 1f89a-2026.11.21-13.15.22-0500: added image support

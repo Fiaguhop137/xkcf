@@ -2,13 +2,16 @@
 // I don't know what it does, but it works. Don't touch it
 import {initializeApp} from "https://www.gstatic.com/firebasejs/13.4.0/firebase-app.js";
 import {getFirestore,doc,collection,getDoc,getDocs,addDoc,updateDoc,serverTimestamp,query,orderBy,limit,startAfter,documentId} from "https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore.js";
+import {getStorage,ref,uploadBytes,getDownloadURL} from "https://www.gstatic.com/firebasejs/13.4.0/firebase-storage.js";
 const firebaseConfig={apiKey:"AIzaSyB3JQaanI_jrkMBj7AcNblkyW2Zrg7qZWk",authDomain:"xkcf-db-1f89a.firebaseapp.com",projectId:"xkcf-db-1f89a",storageBucket:"xkcf-db-1f89a.firebasestorage.app",messagingSenderId:"410642698460",appId:"1:410642698460:web:366bc5adde0a74872d6419",measurementId:"G-ZSQEBPPN75"};
-// Again, no touchy. touchy bad.
+// Okay everything after this is my code. I don't know what the above does, but it works. Don't touch it
 let database;
+let storage;
 export function load(){
     console.log("Firebase loading...");
     const app=initializeApp(firebaseConfig);
     database=getFirestore(app);
+    storage=getStorage(app);
     console.log("Firebase loaded");
     return [app,database];
 };
@@ -32,4 +35,19 @@ export async function getReadable(path,pageSize=20,cursor=null){
         items:snapshot.docs.map(item=>({...item.data(),id:item.id})),
         nextCursor:snapshot.docs.length===pageSize?snapshot.docs.at(-1):null
     };
+};
+export async function uploadImage(file){
+    const MAX_SIZE=1024*1024;
+    const bitmap=await createImageBitmap(file);
+    const canvas=document.createElement("canvas");
+    canvas.width=bitmap.width;
+    canvas.height=bitmap.height;
+    canvas.getContext("2d").drawImage(bitmap,0,0);
+    bitmap.close();
+    const blob=await new Promise(resolve=>{canvas.toBlob(resolve,"image/avif",0.8);});
+    if(!blob||blob.type!=="image/avif"){throw new Error("AVIF encoding is not supported by this browser.");};
+    if(blob.size>MAX_SIZE){throw new Error(`Compressed image is too large: ${(blob.size/1024/1024).toFixed(2)} MiB. Maximum: 1 MiB.`);};
+    const reference=ref(storage,"images/"+crypto.randomUUID()+".avif");
+    await uploadBytes(reference,blob,{contentType:"image/avif"});
+    return await getDownloadURL(reference);
 };

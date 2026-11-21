@@ -24,6 +24,7 @@ export function init(){
             body.innerHTML=`
                 <h2>Welcome!</h2>
                 <p>You have successfully logged in.</p>
+                <input type="file" id="image" accept="image/*"/>
                 <textarea id="post" rows="4" cols="50" placeholder="Type here..." style="resize:none;"></textarea>
                 <input type="text" id="username" placeholder="ur name"/>
                 <p>name is optional; leave blank for anon</p>
@@ -56,11 +57,20 @@ async function post(){
         alert("Please enter some content.");
         return;
     };
+    const imageInput=document.getElementById("image");
+    let image=null;
+    try{if(imageInput.files.length>0){image=await firebase.uploadImage(imageInput.files[0]);};}
+    catch(error){
+        console.error("Image upload failed:",error);
+        alert(error.message);
+        return;
+    };
     console.log("Posting content:",content);
     console.log("Username:",username);
+    image?console.log("Image:",image):console.log("No image uploaded");
     let id_try;
     try{
-        id_try=await firebase.write("posts",{content:content,author:username,createdAt:firebase.getTimestamp()});
+        id_try=await firebase.write("posts",{content:content,author:username,createdAt:firebase.getTimestamp(),image:image});
     }catch(error){
         console.error("Failed to create post:",error);
         alert("Failed to post. Please try again.");
@@ -69,6 +79,7 @@ async function post(){
     const id=id_try?id_try:"unknown";
     console.log("Created post:",id);
     postInput.value="";
+    imageInput.value="";
     const page=await firebase.getReadable("posts");
     displayPosts(page.items,page.nextCursor);
 };
@@ -80,6 +91,12 @@ export function addPost(post){
         const author=document.createElement("strong");
         author.textContent=post.author;
         postDiv.append(author,document.createElement("br"));
+    };
+    if(post.image){
+        const image=document.createElement("img");
+        image.src=post.image;
+        image.style.maxWidth="100%";
+        postDiv.appendChild(image);
     };
     const content=document.createElement("p");
     content.textContent=post.content;
