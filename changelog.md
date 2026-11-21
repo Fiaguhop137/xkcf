@@ -7,3 +7,6 @@
  - 1f89a-2026.11.20-23.09.13-0500: added pagination and changed timestamps to use firebase timestamps
  - 1f89a-2026.11.20-23.19.56-0500: made basic password thingy idk
  - 1f89a-2026.11.20-23.56.31-0500: added license
+ - 1f89a-2026.11.21-10.20.00-0500: added posts and core functions
+ - 1f89a-2026.11.21-10.21.17-0500: fixed html injection vulnerability
+ - 1f89a-2026.11.21-10.28.06-0500: removed obsolete utils.js
