@@ -52,10 +52,10 @@ export function init(){
             const backButtonBottom=document.getElementById("backButtonBottom");
             const nextButtonBottom=document.getElementById("nextButtonBottom");
             let currentIndex=0;
-            backButtonTop.addEventListener("click",()=>{stories.loadStory(currentIndex-1);});
-            nextButtonTop.addEventListener("click",()=>{stories.loadStory(currentIndex+1);});
-            backButtonBottom.addEventListener("click",()=>{stories.loadStory(currentIndex-1);});
-            nextButtonBottom.addEventListener("click",()=>{stories.loadStory(currentIndex+1);});
+            backButtonTop.addEventListener("click",()=>{stories.loadStory(currentIndex-1);currentIndex--;});
+            nextButtonTop.addEventListener("click",()=>{stories.loadStory(currentIndex+1);currentIndex++;});
+            backButtonBottom.addEventListener("click",()=>{stories.loadStory(currentIndex-1);currentIndex--;});
+            nextButtonBottom.addEventListener("click",()=>{stories.loadStory(currentIndex+1);currentIndex++;});
         };
         async function loadPosts(){
             const contentDiv=document.getElementById("content");
