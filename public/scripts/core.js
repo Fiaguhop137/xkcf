@@ -46,10 +46,10 @@ export function init(){
                 <div id="storyContent"></div>
                 <button id="backButtonBottom">Back</button>
                 <button id="nextButtonBottom">Next</button>
-                <p>Want to submit your own story? Click <a id="submitStoryButton">here</a>.</p>
+                <p>Want to submit your own story? Click <a href="#" id="submitStory">here</a>.</p>
             `;
-            const submitStoryButton=document.getElementById("submitStoryButton");
-            submitStoryButton.addEventListener("click",()=>{loadSubmitStoryForm();});
+            const submitStory=document.getElementById("submitStory");
+            submitStory.addEventListener("click",(event)=>{event.preventDefault();loadSubmitStoryForm();});
             const backButtons=[document.getElementById("backButtonTop"),document.getElementById("backButtonBottom")];
             const nextButtons=[document.getElementById("nextButtonTop"),document.getElementById("nextButtonBottom")];
             let currentIndex=0;
