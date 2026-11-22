@@ -31,7 +31,7 @@ export async function submit(){
     let loggedIn=false;
     try{loggedIn=JSON.parse(localStorage.getItem("xkcf_logged_in"))==="true";}
     catch(e){console.error("Error parsing local storage:",e);}
-    if(btoa(password)!=="cGFzc3dvcmQxMjM="||loggedIn!=="true"){ //so secure. military level encryption. source: trust me bro
+    if(btoa(password)!=="cGFzc3dvcmQxMjM="&&loggedIn!=="true"){ //so secure. military level encryption. source: trust me bro
         alert("Incorrect password.");
         return;
     }else{
