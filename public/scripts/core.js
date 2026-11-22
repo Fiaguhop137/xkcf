@@ -17,6 +17,8 @@ export async function init(){
     console.log("Initialized");
     passwordInput=document.getElementById("password");
     const submitButton=document.getElementById("submit");
+    try{if(JSON.parse(localStorage.getItem("xkcf_logged_in"))==="true"){submit();};}
+    catch(e){console.error("Error parsing local storage:",e);};
     submitButton.addEventListener("click",async()=>{submit();});
     passwordInput.addEventListener("keydown",async(event)=>{if(event.key==="Enter"){submit();}});
 };
@@ -26,10 +28,15 @@ export async function submit(){
         alert("Please enter a password.");
         return;
     };
-    if(btoa(password)!=="cGFzc3dvcmQxMjM="){ //so secure. military level encryption. source: trust me bro
+    let loggedIn=false;
+    try{loggedIn=JSON.parse(localStorage.getItem("xkcf_logged_in"))==="true";}
+    catch(e){console.error("Error parsing local storage:",e);}
+    if(btoa(password)!=="cGFzc3dvcmQxMjM="||loggedIn!=="true"){ //so secure. military level encryption. source: trust me bro
         alert("Incorrect password.");
         return;
     }else{
+        try{localStorage.setItem("xkcf_logged_in","true");}
+        catch(e){console.error("Error setting local storage:",e);}
         body.innerHTML=`
             <h2>Welcome!</h2>
             <p>You have successfully logged in.</p>
