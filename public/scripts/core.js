@@ -1,4 +1,5 @@
 import * as firebase from "./firebase.js";
+import * as stories from "./stories.js";
 export function init(){
     console.log("Initializing...");
     const body=document.getElementById("body");
@@ -8,6 +9,7 @@ export function init(){
     <p>hint: its not password123</p>
     <button id='submit'>Submit</button>
     `;
+    console.log("Initialized");
     const passwordInput=document.getElementById("password");
     const submitButton=document.getElementById("submit");
     submitButton.addEventListener("click",async()=>{submit();});
@@ -25,6 +27,41 @@ export function init(){
             body.innerHTML=`
                 <h2>Welcome!</h2>
                 <p>You have successfully logged in.</p>
+                <button id="storiesButton">Stories</button>
+                <button id="postsButton">Posts</button>
+                <div id="content"></div>
+            `;
+            const storiesButton=document.getElementById("storiesButton");
+            const postsButton=document.getElementById("postsButton");
+            storiesButton.addEventListener("click",()=>{loadStories();});
+            postsButton.addEventListener("click",()=>{loadPosts();});
+        };
+        async function loadStories(){
+            const contentDiv=document.getElementById("content");
+            contentDiv.innerHTML=`
+                <div id="title"></div>
+                <div id="author"></div>
+                <button id="backButtonTop">Back</button>
+                <button id="nextButtonTop">Next</button>
+                <div id="storyContent"></div>
+                <button id="backButtonBottom">Back</button>
+                <button id="nextButtonBottom">Next</button>
+            `;
+            const backButtonTop=document.getElementById("backButtonTop");
+            const nextButtonTop=document.getElementById("nextButtonTop");
+            const backButtonBottom=document.getElementById("backButtonBottom");
+            const nextButtonBottom=document.getElementById("nextButtonBottom");
+            let currentIndex=0;
+            backButtonTop.addEventListener("click",()=>{stories.loadStory(currentIndex-1);});
+            nextButtonTop.addEventListener("click",()=>{stories.loadStory(currentIndex+1);});
+            backButtonBottom.addEventListener("click",()=>{stories.loadStory(currentIndex-1);});
+            nextButtonBottom.addEventListener("click",()=>{stories.loadStory(currentIndex+1);});
+        };
+        async function loadPosts(){
+            const contentDiv=document.getElementById("content");
+            contentDiv.innerHTML=`
+                <h3>Create a Post</h3>
+                <p>Upload an image (optional, must be less than 1 MiB):</p>
                 <input type="file" id="image" accept="image/*"/>
                 <textarea id="post" rows="4" cols="50" placeholder="Type here..." style="resize:none;"></textarea>
                 <input type="text" id="username" placeholder="ur name"/>

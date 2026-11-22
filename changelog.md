@@ -22,3 +22,4 @@
  - 1f89a-2026.11.21-14.24.42-0500: alpenglow css(from firefox)! dont you just love internet piracy
  - 1f89a-2026.11.21-15.36.49-0500: small css changes
  - 1f89a-2026.11.21-15.43.45-0500: made it so it doesnt autofil anon, instead it just sets ur name without autofil
+ - 1f89a-2026.11.21-20.21.08-0500: added stories i think idk we'll see how it goes
