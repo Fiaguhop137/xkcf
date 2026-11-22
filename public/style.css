@@ -63,6 +63,9 @@ body > h1 {
 body > p {
     color: var(--muted);
     margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 4px;
+    padding-bottom: 4px;
 }
 body > #body {
     padding-top: 12px;
