@@ -50,15 +50,21 @@ export function init(){
             const backButtons=[document.getElementById("backButtonTop"),document.getElementById("backButtonBottom")];
             const nextButtons=[document.getElementById("nextButtonTop"),document.getElementById("nextButtonBottom")];
             let currentIndex=0;
+            function updateButtons(){
+                backButtons.forEach(button=>button.disabled=currentIndex===0);
+                nextButtons.forEach(button=>button.disabled=currentIndex===stories.count()-1);
+            };
             function navigate(direction){
                 const nextIndex=currentIndex+direction;
                 if(nextIndex<0||nextIndex>=stories.count()){return;};
                 currentIndex=nextIndex;
                 stories.loadStory(currentIndex);
+                updateButtons();
             };
             backButtons.forEach(button=>button.addEventListener("click",()=>navigate(-1)));
             nextButtons.forEach(button=>button.addEventListener("click",()=>navigate(1)));
             stories.loadStory(currentIndex);
+            updateButtons();
         };
         async function loadPosts(){
             const contentDiv=document.getElementById("content");
