@@ -46,7 +46,7 @@ export function init(){
                 <div id="storyContent"></div>
                 <button id="backButtonBottom">Back</button>
                 <button id="nextButtonBottom">Next</button>
-                <p>Want to submit your own story? Click <button id="submitStoryButton">here</button>.</p>
+                <p>Want to submit your own story? Click <a id="submitStoryButton">here</a>.</p>
             `;
             const submitStoryButton=document.getElementById("submitStoryButton");
             submitStoryButton.addEventListener("click",()=>{loadSubmitStoryForm();});
