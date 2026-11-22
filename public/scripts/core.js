@@ -47,15 +47,18 @@ export function init(){
                 <button id="backButtonBottom">Back</button>
                 <button id="nextButtonBottom">Next</button>
             `;
-            const backButtonTop=document.getElementById("backButtonTop");
-            const nextButtonTop=document.getElementById("nextButtonTop");
-            const backButtonBottom=document.getElementById("backButtonBottom");
-            const nextButtonBottom=document.getElementById("nextButtonBottom");
+            const backButtons=[document.getElementById("backButtonTop"),document.getElementById("backButtonBottom")];
+            const nextButtons=[document.getElementById("nextButtonTop"),document.getElementById("nextButtonBottom")];
             let currentIndex=0;
-            backButtonTop.addEventListener("click",()=>{stories.loadStory(currentIndex-1);currentIndex--;});
-            nextButtonTop.addEventListener("click",()=>{stories.loadStory(currentIndex+1);currentIndex++;});
-            backButtonBottom.addEventListener("click",()=>{stories.loadStory(currentIndex-1);currentIndex--;});
-            nextButtonBottom.addEventListener("click",()=>{stories.loadStory(currentIndex+1);currentIndex++;});
+            function navigate(direction){
+                const nextIndex=currentIndex+direction;
+                if(nextIndex<0||nextIndex>=stories.count()){return;};
+                currentIndex=nextIndex;
+                stories.loadStory(currentIndex);
+            };
+            backButtons.forEach(button=>button.addEventListener("click",()=>navigate(-1)));
+            nextButtons.forEach(button=>button.addEventListener("click",()=>navigate(1)));
+            stories.loadStory(currentIndex);
         };
         async function loadPosts(){
             const contentDiv=document.getElementById("content");

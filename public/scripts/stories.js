@@ -12,4 +12,5 @@ export function loadStory(index){
     titleDiv.textContent=stories[index].title;
     authorDiv.textContent=`by ${stories[index].author}`;
     storyContentDiv.innerHTML=stories[index].content;
-}
+};
+export function count(){return stories.length;};
