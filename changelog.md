@@ -30,3 +30,4 @@
  - 1f89a-2026.11.22-13.57.35-0500: added sumbit ur own story page instead of generic emailing thing
  - 1f89a-2026.11.22-14.06.08-0500: okay fixed the button to be a href instead
  - 1f89a-2026.11.22-14.41.30-0500: now keeps you logged in if your already logged in
+ - 1f89a-2026.11.22-16.25.01-0500: added dev.py for easy story approval
