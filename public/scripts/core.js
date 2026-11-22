@@ -1,8 +1,13 @@
 import * as firebase from "./firebase.js";
 import * as stories from "./stories.js";
-export function init(){
+let body;
+let passwordInput;
+let backButtons = [];
+let nextButtons = [];
+let currentIndex = 0;
+export async function init(){
     console.log("Initializing...");
-    const body=document.getElementById("body");
+    body=document.getElementById("body");
     body.innerHTML=`
     <p>Welcome to XKCF! Please enter the password to continue. (this exists to block scrapers and as a very basic captcha)</p>
     <input type='password' id='password' placeholder='Enter Password'/>
@@ -10,123 +15,123 @@ export function init(){
     <button id='submit'>Submit</button>
     `;
     console.log("Initialized");
-    const passwordInput=document.getElementById("password");
+    passwordInput=document.getElementById("password");
     const submitButton=document.getElementById("submit");
     submitButton.addEventListener("click",async()=>{submit();});
     passwordInput.addEventListener("keydown",async(event)=>{if(event.key==="Enter"){submit();}});
-    async function submit(){
-        const password=passwordInput.value;
-        if(password===""){
-            alert("Please enter a password.");
-            return;
-        };
-        if(btoa(password)!=="cGFzc3dvcmQxMjM="){ //so secure. military level encryption. source: trust me bro
-            alert("Incorrect password.");
-            return;
-        }else{
-            body.innerHTML=`
-                <h2>Welcome!</h2>
-                <p>You have successfully logged in.</p>
-                <button id="storiesButton">Stories</button>
-                <button id="postsButton">Posts</button>
-                <div id="content"></div>
-            `;
-            const storiesButton=document.getElementById("storiesButton");
-            const postsButton=document.getElementById("postsButton");
-            storiesButton.addEventListener("click",()=>{loadStories();});
-            postsButton.addEventListener("click",()=>{loadPosts();});
-        };
-        async function loadStories(){
-            const contentDiv=document.getElementById("content");
-            contentDiv.innerHTML=`
-                <h3 id="title"></h3>
-                <small id="author"></small>
-                <button id="backButtonTop">Back</button>
-                <button id="nextButtonTop">Next</button>
-                <div id="storyContent"></div>
-                <button id="backButtonBottom">Back</button>
-                <button id="nextButtonBottom">Next</button>
-                <p>Want to submit your own story? Click <a href="#" id="submitStory">here</a>.</p>
-            `;
-            const submitStory=document.getElementById("submitStory");
-            submitStory.addEventListener("click",(event)=>{event.preventDefault();loadSubmitStoryForm();});
-            const backButtons=[document.getElementById("backButtonTop"),document.getElementById("backButtonBottom")];
-            const nextButtons=[document.getElementById("nextButtonTop"),document.getElementById("nextButtonBottom")];
-            let currentIndex=0;
-            function updateButtons(){
-                backButtons.forEach(button=>button.disabled=currentIndex===0);
-                nextButtons.forEach(button=>button.disabled=currentIndex===stories.count()-1);
-            };
-            function navigate(direction){
-                const nextIndex=currentIndex+direction;
-                if(nextIndex<0||nextIndex>=stories.count()){return;};
-                currentIndex=nextIndex;
-                stories.loadStory(currentIndex);
-                updateButtons();
-            };
-            backButtons.forEach(button=>button.addEventListener("click",()=>navigate(-1)));
-            nextButtons.forEach(button=>button.addEventListener("click",()=>navigate(1)));
-            stories.loadStory(currentIndex);
-            updateButtons();
-        };
-        async function loadPosts(){
-            const contentDiv=document.getElementById("content");
-            contentDiv.innerHTML=`
-                <h3>Create a Post</h3>
-                <p>Upload an image (optional, must be less than 1 MiB):</p>
-                <input type="file" id="image" accept="image/*"/>
-                <textarea id="post" rows="4" cols="50" placeholder="Type here..." style="resize:none !important;"></textarea>
-                <input type="text" id="username" placeholder="ur name"/>
-                <p>name is optional; leave blank for anon</p>
-                <button id="postButton">Post</button>
-                <button id="refreshButton">Refresh</button>
-                <p>Posts will be displayed below:</p>
-                <div id="posts"></div>
-            `;
-            const postButton=document.getElementById("postButton");
-            const refreshButton=document.getElementById("refreshButton");
-            postButton.addEventListener("click",post);
-            refreshButton.addEventListener("click",async()=>{
-                const page=await firebase.getReadable("posts");
-                displayPosts(page.items,page.nextCursor);
-            });
-            const page=await firebase.getReadable("posts");
-            displayPosts(page.items,page.nextCursor);
-        };
-        async function loadSubmitStoryForm(){
-            const contentDiv=document.getElementById("content");
-            contentDiv.innerHTML=`
-                <h3>Submit a Story</h3>
-                <input type="text" id="storyTitleInput" placeholder="Story Title"/>
-                <input type="text" id="storyAuthorInput" placeholder="Author Name"/>
-                <textarea id="storyContentInput" rows="4" cols="50" placeholder="Type your story here..." style="resize:none !important;"></textarea>
-                <button id="submitStoryButton">Submit Story</button>
-            `;
-            const submitStoryButton=document.getElementById("submitStoryButton");
-            submitStoryButton.addEventListener("click",async()=>{
-                const titleInput=document.getElementById("storyTitleInput");
-                const authorInput=document.getElementById("storyAuthorInput");
-                const contentInput=document.getElementById("storyContentInput");
-                const title=titleInput.value.trim();
-                const author=authorInput.value.trim()||"Anonymous";
-                const content=contentInput.value.trim();
-                if(title===""||content===""){
-                    alert("Please enter a title and content for your story.");
-                    return;
-                };
-                try{
-                    await firebase.write("stories",{title:title,author:author,content:content,createdAt:firebase.getTimestamp()});
-                    alert("Story submitted successfully! Please note that it may take some time for your story to be approved and appear on the site.");
-                    loadStories();
-                }catch(error){
-                    console.error("Failed to submit story:",error);
-                    alert("Failed to submit story. Please try again.");
-                };
-            });
-        };
+};
+export async function submit(){
+    const password=passwordInput.value;
+    if(password===""){
+        alert("Please enter a password.");
+        return;
+    };
+    if(btoa(password)!=="cGFzc3dvcmQxMjM="){ //so secure. military level encryption. source: trust me bro
+        alert("Incorrect password.");
+        return;
+    }else{
+        body.innerHTML=`
+            <h2>Welcome!</h2>
+            <p>You have successfully logged in.</p>
+            <button id="storiesButton">Stories</button>
+            <button id="postsButton">Posts</button>
+            <div id="content"></div>
+        `;
+        const storiesButton=document.getElementById("storiesButton");
+        const postsButton=document.getElementById("postsButton");
+        storiesButton.addEventListener("click",()=>{loadStories();});
+        postsButton.addEventListener("click",()=>{loadPosts();});
     };
 };
-async function post(){
+export async function loadStories(){
+    const contentDiv=document.getElementById("content");
+    contentDiv.innerHTML=`
+        <h3 id="title"></h3>
+        <div id="author"></div>
+        <button id="backButtonTop">Back</button>
+        <button id="nextButtonTop">Next</button>
+        <div id="storyContent"></div>
+        <button id="backButtonBottom">Back</button>
+        <button id="nextButtonBottom">Next</button>
+        <p>Want to submit your own story? Click <a href="#" id="submitStory">here</a>.</p>
+    `;
+    const submitStory=document.getElementById("submitStory");
+    submitStory.addEventListener("click",(event)=>{event.preventDefault();loadSubmitStoryForm();});
+    backButtons=[document.getElementById("backButtonTop"),document.getElementById("backButtonBottom")];
+    nextButtons=[document.getElementById("nextButtonTop"),document.getElementById("nextButtonBottom")];
+    currentIndex=0;
+    backButtons.forEach(button=>button.addEventListener("click",()=>navigate(-1)));
+    nextButtons.forEach(button=>button.addEventListener("click",()=>navigate(1)));
+    stories.loadStory(currentIndex);
+    updateButtons();
+};
+export async function updateButtons(){
+    backButtons.forEach(button=>button.disabled=currentIndex===0);
+    nextButtons.forEach(button=>button.disabled=currentIndex===stories.count()-1);
+};
+export async function navigate(direction){
+    const nextIndex=currentIndex+direction;
+    if(nextIndex<0||nextIndex>=stories.count()){return;};
+    currentIndex=nextIndex;
+    stories.loadStory(currentIndex);
+    updateButtons();
+};
+export async function loadPosts(){
+    const contentDiv=document.getElementById("content");
+    contentDiv.innerHTML=`
+        <h3>Create a Post</h3>
+        <p>Upload an image (optional, must be less than 1 MiB):</p>
+        <input type="file" id="image" accept="image/*"/>
+        <textarea id="post" rows="4" cols="50" placeholder="Type here..." style="resize:none !important;"></textarea>
+        <input type="text" id="username" placeholder="ur name"/>
+        <p>name is optional; leave blank for anon</p>
+        <button id="postButton">Post</button>
+        <button id="refreshButton">Refresh</button>
+        <p>Posts will be displayed below:</p>
+        <div id="posts"></div>
+    `;
+    const postButton=document.getElementById("postButton");
+    const refreshButton=document.getElementById("refreshButton");
+    postButton.addEventListener("click",post);
+    refreshButton.addEventListener("click",async()=>{
+        const page=await firebase.getReadable("posts");
+        displayPosts(page.items,page.nextCursor);
+    });
+    const page=await firebase.getReadable("posts");
+    displayPosts(page.items,page.nextCursor);
+};
+export async function loadSubmitStoryForm(){
+    const contentDiv=document.getElementById("content");
+    contentDiv.innerHTML=`
+        <h3>Submit a Story</h3>
+        <input type="text" id="storyTitleInput" placeholder="Story Title"/>
+        <input type="text" id="storyAuthorInput" placeholder="Author Name"/>
+        <textarea id="storyContentInput" rows="4" cols="50" placeholder="Type your story here..." style="resize:none !important;"></textarea>
+        <button id="submitStoryButton">Submit Story</button>
+    `;
+    const submitStoryButton=document.getElementById("submitStoryButton");
+    submitStoryButton.addEventListener("click",async()=>{
+        const titleInput=document.getElementById("storyTitleInput");
+        const authorInput=document.getElementById("storyAuthorInput");
+        const contentInput=document.getElementById("storyContentInput");
+        const title=titleInput.value.trim();
+        const author=authorInput.value.trim()||"Anonymous";
+        const content=contentInput.value.trim();
+        if(title===""||content===""){
+            alert("Please enter a title and content for your story.");
+            return;
+        };
+        try{
+            await firebase.write("stories",{title:title,author:author,content:content,createdAt:firebase.getTimestamp()});
+            alert("Story submitted successfully! Please note that it may take some time for your story to be approved and appear on the site.");
+            loadStories();
+        }catch(error){
+            console.error("Failed to submit story:",error);
+            alert("Failed to submit story. Please try again.");
+        };
+    });
+};
+export async function post(){
     const postInput=document.getElementById("post");
     const usernameInput=document.getElementById("username");
     const username=usernameInput.value.trim()||"Anonymous";
@@ -161,7 +166,7 @@ async function post(){
     const page=await firebase.getReadable("posts");
     displayPosts(page.items,page.nextCursor);
 };
-export function addPost(post){
+export async function addPost(post){
     const postsDiv=document.getElementById("posts");
     const postDiv=document.createElement("div");
     postDiv.className="post";
@@ -184,7 +189,7 @@ export function addPost(post){
     postDiv.append(content,timestamp);
     postsDiv.appendChild(postDiv);
 };
-export function displayPosts(posts,nextCursor,append=false){
+export async function displayPosts(posts,nextCursor,append=false){
     const postsDiv=document.getElementById("posts");
     if(!append){postsDiv.innerHTML="";};
     posts.forEach(post=>{addPost(post);});
