@@ -26,3 +26,4 @@
  - 1f89a-2026.11.21-20.45.48-0500: okay i fixed a small issue
  - 1f89a-2026.11.21-21.30.19-0500: added source code link
  - 1f89a-2026.11.22-10.27.18-0500: after much pain i have finally made a half decent css
+ - 1f89a-2026.11.22-10.35.42-0500: added submit your own story thing

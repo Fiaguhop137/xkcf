@@ -46,6 +46,7 @@ export function init(){
                 <div id="storyContent"></div>
                 <button id="backButtonBottom">Back</button>
                 <button id="nextButtonBottom">Next</button>
+                <p>Want to submit your own story? Email it to <a href="mailto:eastonzou@gmail.com">eastonzou@gmail.com</a></p>
             `;
             const backButtons=[document.getElementById("backButtonTop"),document.getElementById("backButtonBottom")];
             const nextButtons=[document.getElementById("nextButtonTop"),document.getElementById("nextButtonBottom")];
