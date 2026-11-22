@@ -72,7 +72,7 @@ export function init(){
                 <h3>Create a Post</h3>
                 <p>Upload an image (optional, must be less than 1 MiB):</p>
                 <input type="file" id="image" accept="image/*"/>
-                <textarea id="post" rows="4" cols="50" placeholder="Type here..." style="resize:none;"></textarea>
+                <textarea id="post" rows="4" cols="50" placeholder="Type here..." style="resize:none !important;"></textarea>
                 <input type="text" id="username" placeholder="ur name"/>
                 <p>name is optional; leave blank for anon</p>
                 <button id="postButton">Post</button>
