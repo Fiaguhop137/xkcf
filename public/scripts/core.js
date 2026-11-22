@@ -17,21 +17,21 @@ export async function init(){
     console.log("Initialized");
     passwordInput=document.getElementById("password");
     const submitButton=document.getElementById("submit");
-    try{if(JSON.parse(localStorage.getItem("xkcf_logged_in"))==="true"){submit();};}
+    try{if(JSON.parse(localStorage.getItem("xkcf_logged_in"))===true){submit();};}
     catch(e){console.error("Error parsing local storage:",e);};
     submitButton.addEventListener("click",async()=>{submit();});
     passwordInput.addEventListener("keydown",async(event)=>{if(event.key==="Enter"){submit();}});
 };
 export async function submit(){
     const password=passwordInput.value;
-    if(password===""){
+    let loggedIn=false;
+    try{loggedIn=JSON.parse(localStorage.getItem("xkcf_logged_in"));}
+    catch(e){console.error("Error parsing local storage:",e);}
+    if(password===""&&!loggedIn){
         alert("Please enter a password.");
         return;
     };
-    let loggedIn=false;
-    try{loggedIn=JSON.parse(localStorage.getItem("xkcf_logged_in"))==="true";}
-    catch(e){console.error("Error parsing local storage:",e);}
-    if(btoa(password)!=="cGFzc3dvcmQxMjM="&&loggedIn!=="true"){ //so secure. military level encryption. source: trust me bro
+    if(btoa(password)!=="cGFzc3dvcmQxMjM="&&!loggedIn){ //so secure. military level encryption. source: trust me bro
         alert("Incorrect password.");
         return;
     }else{
