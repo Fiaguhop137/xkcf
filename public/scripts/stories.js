@@ -3,6 +3,11 @@ const stories=[
         title:"idk first story",
         author:"The dev",
         content:"Once upon a time, there was a little bob named Robert;DROP TABLE Students;--. The end. The moral of the story is: sanitize your inputs."
+    },
+    {
+        title:"Second Story",
+        author:"the dev(again)",
+        content:"do you like how i actuallyed used capitalization in the title of this story? i sure hope you do. the end."
     }
 ];
 export function loadStory(index){
