@@ -116,7 +116,7 @@ export function init(){
                 };
                 try{
                     await firebase.write("stories",{title:title,author:author,content:content,createdAt:firebase.getTimestamp()});
-                    alert("Story submitted successfully!");
+                    alert("Story submitted successfully! Please note that it may take some time for your story to be approved and appear on the site.");
                     loadStories();
                 }catch(error){
                     console.error("Failed to submit story:",error);
