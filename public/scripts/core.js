@@ -39,15 +39,17 @@ export function init(){
         async function loadStories(){
             const contentDiv=document.getElementById("content");
             contentDiv.innerHTML=`
-                <div id="title"></div>
-                <div id="author"></div>
+                <h3 id="title"></h3>
+                <small id="author"></small>
                 <button id="backButtonTop">Back</button>
                 <button id="nextButtonTop">Next</button>
                 <div id="storyContent"></div>
                 <button id="backButtonBottom">Back</button>
                 <button id="nextButtonBottom">Next</button>
-                <p>Want to submit your own story? Email it to <a href="mailto:eastonzou@gmail.com">eastonzou@gmail.com</a></p>
+                <p>Want to submit your own story? Click <button id="submitStoryButton">here</button>.</p>
             `;
+            const submitStoryButton=document.getElementById("submitStoryButton");
+            submitStoryButton.addEventListener("click",()=>{loadSubmitStoryForm();});
             const backButtons=[document.getElementById("backButtonTop"),document.getElementById("backButtonBottom")];
             const nextButtons=[document.getElementById("nextButtonTop"),document.getElementById("nextButtonBottom")];
             let currentIndex=0;
@@ -90,6 +92,37 @@ export function init(){
             });
             const page=await firebase.getReadable("posts");
             displayPosts(page.items,page.nextCursor);
+        };
+        async function loadSubmitStoryForm(){
+            const contentDiv=document.getElementById("content");
+            contentDiv.innerHTML=`
+                <h3>Submit a Story</h3>
+                <input type="text" id="storyTitleInput" placeholder="Story Title"/>
+                <input type="text" id="storyAuthorInput" placeholder="Author Name"/>
+                <textarea id="storyContentInput" rows="4" cols="50" placeholder="Type your story here..." style="resize:none !important;"></textarea>
+                <button id="submitStoryButton">Submit Story</button>
+            `;
+            const submitStoryButton=document.getElementById("submitStoryButton");
+            submitStoryButton.addEventListener("click",async()=>{
+                const titleInput=document.getElementById("storyTitleInput");
+                const authorInput=document.getElementById("storyAuthorInput");
+                const contentInput=document.getElementById("storyContentInput");
+                const title=titleInput.value.trim();
+                const author=authorInput.value.trim()||"Anonymous";
+                const content=contentInput.value.trim();
+                if(title===""||content===""){
+                    alert("Please enter a title and content for your story.");
+                    return;
+                };
+                try{
+                    await firebase.write("stories",{title:title,author:author,content:content,createdAt:firebase.getTimestamp()});
+                    alert("Story submitted successfully!");
+                    loadStories();
+                }catch(error){
+                    console.error("Failed to submit story:",error);
+                    alert("Failed to submit story. Please try again.");
+                };
+            });
         };
     };
 };

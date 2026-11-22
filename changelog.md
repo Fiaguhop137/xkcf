@@ -27,3 +27,4 @@
  - 1f89a-2026.11.21-21.30.19-0500: added source code link
  - 1f89a-2026.11.22-10.27.18-0500: after much pain i have finally made a half decent css
  - 1f89a-2026.11.22-10.35.42-0500: added submit your own story thing
+ - 1f89a-2026.11.22-13.57.35-0500: added sumbit ur own story page instead of generic emailing thing

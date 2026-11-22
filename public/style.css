@@ -125,6 +125,11 @@ h2, h3 {
     margin: 14px 0;
     overflow-wrap: anywhere;
 }
+#submitStoryButton {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+}
 .post img {
     display: block;
     max-width: 100%;
