@@ -88,7 +88,9 @@ documents=response.json().get("documents",[])
 source=load_source()
 with open(STORIES_FILE,"w",encoding="utf-8") as file:
     file.write(source)
+sync=False
 for document in documents:
+    sync=True
     document_id=document["name"].split("/")[-1]
     fields=document["fields"]
     author=fields["author"]["stringValue"]
@@ -109,5 +111,6 @@ for document in documents:
         delete_document("stories",document_id)
     except requests.RequestException as error:
         print(f"WARNING: Firestore deletion failed: {error}")
-subprocess.run(["git","sync"])
-subprocess.run(["firebase","deploy","--only","hosting:xkcf-1f89a"])
+if sync:
+    subprocess.run(["git","sync"])
+    subprocess.run(["firebase","deploy","--only","hosting:xkcf-1f89a"])
