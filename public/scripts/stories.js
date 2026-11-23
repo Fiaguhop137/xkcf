@@ -1,13 +1,8 @@
 const stories=[
     {
-        title:"idk first story",
-        author:"The dev",
-        content:"Once upon a time, there was a little bob named Robert;DROP TABLE Students;--. The end. The moral of the story is: sanitize your inputs."
-    },
-    {
-        title:"Second Story",
-        author:"the dev(again)",
-        content:"do you like how i actuallyed used capitalization in the title of this story? i sure hope you do. the end."
+        title:"Please help me",
+        author:"The Black Hat Wearer",
+        content:"The dev wants me to make a story so they can check if their code works. I said no because I was busy, so the dev stole my hat and threw it into the basement. When I ran into the basement to get my hat, the dev locked the door and won’t let me out until I submit a story. This story is a call for help. Please, save me from the dev."
     }
 ];
 export function loadStory(index){
